@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>
+        لیست محصولات
+    </h2>
+    <ul>
+   {% for product  in products %}
+      <li> {{product.name}} </li>
+      <p>قیمت:  {{product.price}} </p>
+      {% if product.available %}
+        <span style="color:green ;">موجود </span>
+        {% else %}
+        <span style="color:red ;">ناموجود </span>
+      {% endif %}
+      <br>
+      {% if  product.price > 10000000 %}
+        <span style="color:blue ;">ارسال رایگان  </span>
+        {% else %}
+        <span style="color:blue ;">هزینه ارسال :  100000تومان    </span>
+      {% endif %}
+      <hr>
+   {% endfor %}
+    </ul>
+</body>
+</html>

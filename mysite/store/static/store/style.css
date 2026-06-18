@@ -1,0 +1,10 @@
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f6f4;
+    margin: 0;
+    padding: 20px;
+}
+.container{
+    max-width: 900px;
+    margin: 0 auto;
+}

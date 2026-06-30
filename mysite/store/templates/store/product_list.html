@@ -1,31 +1,91 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>فروشگاه آنلاین من</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
 </head>
 <body>
-    <h2>
-        لیست محصولات
-    </h2>
-    <ul>
-   {% for product  in products %}
-      <li> {{product.name}} </li>
-      <p>قیمت:  {{product.price}} </p>
-      {% if product.available %}
-        <span style="color:green ;">موجود </span>
-        {% else %}
-        <span style="color:red ;">ناموجود </span>
-      {% endif %}
-      <br>
-      {% if  product.price > 10000000 %}
-        <span style="color:blue ;">ارسال رایگان  </span>
-        {% else %}
-        <span style="color:blue ;">هزینه ارسال :  100000تومان    </span>
-      {% endif %}
-      <hr>
-   {% endfor %}
-    </ul>
+
+    <!-- هدر سایت -->
+    <header class="main-header">
+        <div class="container header-content">
+            <div class="logo">🛒 فروشگاه من</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#">خانه</a></li>
+                    <li><a href="#">محصولات</a></li>
+                    <li><a href="#">درباره ما</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- بخش خوش‌آمدگویی (Hero Section) -->
+    <section class="hero">
+        <div class="container">
+            <h1>به فروشگاه ما خوش آمدید!</h1>
+            <p>بهترین محصولات با بهترین قیمت را اینجا پیدا کنید.</p>
+        </div>
+    </section>
+
+    <!-- بخش محصولات -->
+    <main class="container">
+        <div class ="category">
+            <h4>دسته بندی ها: </h4>
+            <a href="{% url 'product_list' %}" class="clink1">نمایش همه</a>
+            {% for x in categories %}
+                <a href="{% url 'products_by_category' x.id %}" class="clink">{{ x.name }} </a>
+            {% endfor %}
+        </div>
+
+        <h2 class="section-title">محصولات جدید</h2>
+        
+        <div class="product-grid">
+            {% for product in products %}
+                <div class="product-card">
+                    <!-- بخش تصویر محصول -->
+                    <div class="product-image">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="{% static 'store/placeholder.png' %}" alt="بدون تصویر">
+                        {% endif %}
+                        
+                        {% if not product.available %}
+                            <div class="overlay">ناموجود</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- بخش اطلاعات محصول -->
+                    <div class="product-info">
+                        <h3><a href="{% url 'product_detail' product.id %}">{{ product.name|title }}</a></h3>
+                        <p class="price">{{ product.price }} تومان</p>
+                        
+                        <div class="card-footer">
+                            {% if product.available %}
+                                <span class="status-text available">موجود در انبار</span>
+                                <button class="add-to-cart-btn">افزودن</button>
+                            {% else %}
+                                <span class="status-text unavailable">ناموجود</span>
+                              
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="no-products">
+                    <p>هیچ محصولی در حال حاضر موجود نیست.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <p>تمامی حقوق برای فروشگاه من محفوظ است &copy; 2026</p>
+    </footer>
+
 </body>
 </html>

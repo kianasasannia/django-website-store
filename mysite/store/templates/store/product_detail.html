@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }}</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <div class="detail-card">
+
+        <div class="detail-image">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% else %}
+                <img src="{% static 'store/placeholder.png' %}" alt="بدون تصویر">
+            {% endif %}
+        </div>
+
+        <div class="detail-info">
+            <h1>{{ product.name }}</h1>
+
+            <p class="detail-price">
+                {{ product.price }} تومان
+            </p>
+
+            <p class="detail-description">
+                {{ product.description }}
+            </p>
+
+            <div class="detail-meta">
+                <p>
+                    <strong>تاریخ ثبت:</strong>
+                    {{ product.created_at|date:"d/m/Y" }}
+                </p>
+
+                <p>
+                    <strong>وضعیت:</strong>
+                    {% if product.available %}
+                        <span class="status available">موجود</span>
+                    {% else %}
+                        <span class="status unavailable">ناموجود</span>
+                    {% endif %}
+                </p>
+            </div>
+
+            <a href="{% url 'product_list' %}" class="back-btn">بازگشت به لیست محصولات</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
